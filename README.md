@@ -92,12 +92,13 @@ Replace `127.0.0.1` with IP of host that `docker-compose` command run on it.
 
 
     ```
-    $ docker exec -it atlassian_database_1  psql -U postgres
-       postgres=# CREATE DATABASE jira;
-       postgres=# CREATE DATABASE wiki;
-       postgres=# CREATE DATABASE bitbucket;
-       postgres=# \l
-       postgres-# \q
+    docker exec -it atlassian_database_1  psql -U postgres
+       CREATE DATABASE jira;
+       CREATE DATABASE confluence;
+       CREATE DATABASE wiki;
+       CREATE DATABASE bitbucket;
+       \l
+       \q
     ```
 
 6. Browse Atlassian products:

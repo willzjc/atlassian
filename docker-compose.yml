@@ -1,34 +1,43 @@
 version: '3.4'
 services:
   jira:
-    image: cptactionhank/atlassian-jira:7.9.2
+    image: cptactionhank/atlassian-jira:latest
     restart: always
     links:
       - database
     volumes:
       - jira-data:/var/atlassian/jira
+    networks:
+     - network
 
   confluence:
-    image: cptactionhank/atlassian-confluence:6.9.0
+    image: cptactionhank/atlassian-confluence:latest
     restart: always
     links:
       - database
     volumes:
       - confluence-data:/var/atlassian/confluence
+    networks:
+     - network
 
   bitbucket:
     image: atlassian/bitbucket-server:5.10.1
-    restart: always
     links:
       - database
     volumes:
       - bitbucket-data:/var/atlassian/application-data/bitbucket
+    networks:
+     - network
 
   database:
     image: postgres:9.4
     restart: always
+    networks:
+     - network
     volumes:
       - database-data:/var/lib/postgresql/data
+#    command: ['/bin/bash','-c',"psql -U psql -c 'CREATE DATABASE jira' ; "]
+#    command: ['/bin/bash','-c',"createdb jira ; createdb confluence ; createdb wiki ; createdb bitbucket "]
   nginx:
     image: nginx
     restart: always
@@ -43,8 +52,15 @@ services:
     command: ./src/scripts/run_nginx.sh
     environment:
     - DOMAIN
+    networks:
+     - network
+
 volumes:
   jira-data:
   confluence-data:
   bitbucket-data:
   database-data:
+
+networks:
+  network:
+    driver: bridge
