@@ -37,7 +37,7 @@ http {
 
     server {
         listen       80;
-        server_name  jira.${DOMAIN} www.jira.${DOMAIN};
+        server_name  jira.${DOMAIN} www.jira.${DOMAIN} localjira;
 
         location / {
             proxy_pass              http://jira:8080;
@@ -54,7 +54,7 @@ http {
 
     server {
         listen       80;
-        server_name  wiki.${DOMAIN} www.wiki.${DOMAIN};
+        server_name  wiki.${DOMAIN} www.wiki.${DOMAIN} confluence.${DOMAIN} www.confluence.${DOMAIN} localconfluence;
 
         location / {
             proxy_pass                      http://confluence:8090;
